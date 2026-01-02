@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Private Chat</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Main container for two columns -->
+     <div class="prog"></div>
+    <div class="container">
+        <!-- Left column: Existing chat box -->
+        <div class="messege_box">
+            <div class="message_display">
+                <div class="usr">
+                    % if user_name:
+                       Welcome {{user_name}}
+                    % end
+                </div>
+                <div class="wraper" id="display"></div>
+            </div>
+            <div class="send_box" id="send_box">
+                <textarea name="msg" id="msg"></textarea>
+                <input type="file" name="" class="attach" id="attach" multiple>
+                <input type="button" value="send" id="send">
+            </div>
+        </div>
+
+        <!-- Right column: Active Users Panel (New) -->
+        <div class="active_users">
+            <div class="usr">Active Users</div>
+            <div class="user_list" id="active_users">
+            </div>
+        </div>
+        <div style="height: 30px;width: 100%;">
+        </div>
+    <script src="script.js"></script>
+</body>
+</html>

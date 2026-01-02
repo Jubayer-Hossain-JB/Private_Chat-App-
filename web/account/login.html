@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Private Chat</title>
+    <link rel="stylesheet" href="./account/style.css">
+</head>
+<body>
+        <div class="messege_box">
+            <form action="./login" method="post">
+                % if error_message:
+                <div style="
+                        color: red;
+                        font-family: sans-serif;
+                        text-align: center;
+                        margin-bottom: 12px;
+                        width: 100%;">{{ error_message }}</div>
+                    
+                % end
+                <h3 class="tit">Login Page</h3>
+                <label for="username">User Name</label>
+                <input type="text" name="username" id="username" required>
+                <label for="mobile">Mobile</label>
+                <input type="number" name="mobile" id="mobile" required>
+                <input type="submit" value="Submit">
+                <a href="/sign-up">I don't have any account</a>
+            </form>
+        
+    </div> 
+</body>
+</html>

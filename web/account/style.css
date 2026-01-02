@@ -1,0 +1,92 @@
+*{
+    border: 0;
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background: linear-gradient(133deg, #086375 1%, #820263 94%);
+    background-attachment: fixed;
+}
+
+.messege_box{
+        height: 60vh;
+        aspect-ratio: .9;
+        background: #FAC9B8;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        border: #086375 5px solid;
+        border-radius: 2rem;
+        overflow: hidden;
+}
+.send_box{
+    background: #FF0022;
+    position: absolute;
+    display: flex;
+    bottom: 0;
+    width: 100%;
+    padding-block: 10px;
+    border-top: #4C1C00 2px solid;
+    justify-content: space-around;
+}
+.tit{
+    margin-bottom: 14px;
+    font-family: sans-serif;
+    color: #800464;
+}
+
+
+form{
+    height: 100%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+input{
+    width: 90%;
+    height: 10%;
+    border-radius: 2vw;
+    margin-block: 8px;
+    font-size: 1.1rem;
+    padding-inline: 17px;
+}
+label{
+    width: 80%;
+    font-family: sans-serif;
+    color: #105d74;
+}
+input[type=submit] {
+    background: #820263;
+    color: white;
+    font-size: 1.2rem;    
+}
+input[type=submit]:hover {
+    background: #a31d82
+}
+input[type=submit]:active {
+    background: #4d163f
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+  }
+::-webkit-scrollbar-thumb{
+    border-radius: 15px;
+    background-color: #820263;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
