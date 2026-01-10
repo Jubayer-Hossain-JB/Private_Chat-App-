@@ -7,11 +7,12 @@ import web
 import soket
 from ctypes import windll
 import os
+import shutil
 class Window(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("QR Code Generator")
-        self.geometry("400x500")
+        self.geometry("400x510")
         # self.overrideredirect(True)  # Remove window decorations
         self.overrideredirect(True)
         # self.overrideredirect(False)
@@ -22,7 +23,7 @@ class Window(ctk.CTk):
         self._drag_start_y = 0
 
         # Main frame to hold all widgets
-        self.main_frame = ctk.CTkFrame(self, fg_color="transparent")
+        self.main_frame = ctk.CTkFrame(self, fg_color="transparent", border_width=3, border_color="#3b3b3b")
         self.main_frame.pack(fill="both", expand=True, padx=10, pady=10)
 
         # Bind drag events to the main frame
@@ -33,7 +34,7 @@ class Window(ctk.CTk):
         self.image_label = ctk.CTkLabel(self.main_frame, text="QR Code will appear here", 
                                         width=300, height=300, fg_color="white", corner_radius=10)
         self.image_label.pack(pady=(20, 10))
-
+        ctk.CTkLabel(self.main_frame, text="The backend engine is running. Now scan the above QRcode or Click the button below or go to the hyper link below.", wraplength=350, compound="left").pack()
         # Text display label
         self.text_label = ctk.CTkButton(
             master=self,
@@ -47,17 +48,24 @@ class Window(ctk.CTk):
         )
         # self.text_label = ctk.CTkLabel(self.main_frame, text="Enter text in console", 
         #                                font=("Arial", 14), wraplength=380)
-        self.text_label.place(y=360, x= 200, anchor='center')
+        self.text_label.place(y=400, x= 200, anchor='center')
 
         # Custom close button
-        self.close_button = ctk.CTkButton(self.main_frame, text="✕", width=60, height=60, 
-                                          fg_color="transparent", font=("Arial", 21),
-                                          command=self.destroy)
-        self.close_button.pack(pady=30,side='bottom')
+        self.close_button = ctk.CTkButton(self.main_frame, text="✕", width=60, height=40, 
+                                          fg_color="#6b0000", font=("Arial", 21),
+                                          command=self.close ,hover_color="#2f0909")
+        self.close_button.pack(pady=20,side='bottom')
         self.close_button.bind("<Button-1>", lambda e: "break")  # Prevent drag when clicking button
         self.update_display(f'http://{web.IPAddr}:8080')
         
 
+    def close(self):
+        print('ye')
+        self.destroy()
+        dir = "./uploads"
+        shutil.rmtree(dir)
+        os.makedirs(dir)
+    
     def start_drag(self, event):
         self._drag_start_x = event.x
         self._drag_start_y = event.y
@@ -84,7 +92,7 @@ class Window(ctk.CTk):
         # Convert to CTkImage
         ctk_image = ctk.CTkImage(light_image=pil_image, dark_image=pil_image, size=(300, 300))
         self.image_label.configure(image=ctk_image, text="")
-        self.text_label.configure(command=lambda:self.open_browser(text), text=text)
+        self.text_label.configure(command=lambda:self.open_browser(text), text=f'Click to open http://{web.IPAddr}:8080')
     def open_browser(self, site_address):
         webbrowser.open(site_address)
 
