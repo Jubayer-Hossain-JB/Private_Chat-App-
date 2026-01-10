@@ -30,7 +30,7 @@ mnums = []
 year = datetime.now().year
 moth = datetime.now().month
 date = datetime.now().date
-TEMPLATE_PATH.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'web/'))
+TEMPLATE_PATH.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), './web/'))
 def has_numbers(inputString):
     return bool(re.search(r'\d', inputString))
 
@@ -38,11 +38,11 @@ def has_numbers(inputString):
 def index():
     user_code = request.get_cookie('ugr_cd', secret=secret_key)
     if not user_code or not user_code in uids:
-        return template('account/login.html', error_message=None)
+        return template('./account/login.html', error_message=None)
     return template('index.html', user_name=users[uids.index(user_code)])
 @route('/sign-up')    
 def sign_up():
-    return template('/account/sign_up.html', error_message=None)
+    return template('./account/sign_up.html', error_message=None)
 
 @route('/<file:path>')
 def resources(file):
@@ -51,7 +51,7 @@ def resources(file):
 @route('/login', method='POST')
 def login():
     if request.forms['mobile'] not in mnums:
-        return template('account/login.html', error_message='Invalid username or password')
+        return template('./account/login.html', error_message='Invalid username or password')
     id = mnums.index(request.forms['mobile'])
     if request.forms['username'] == users[id]:
         response.set_cookie('ugr_cd', uids[id], secret=secret_key, maxage=2592000)
@@ -63,11 +63,11 @@ def login():
 def create_account():
     global seed
     if request.forms['mobile'] in mnums:
-        return template('account/sign_up.html', error_message='The mobile number is already taken. Please try other')
+        return template('./account/sign_up.html', error_message='The mobile number is already registered. Please try other one')
     if not has_numbers(request.forms['mobile']):
-        return template('account/sign_up.html', error_message='Only numbers can be accepted as mobile number. Please try other')
+        return template('./account/sign_up.html', error_message='Only numbers can be accepted. Please try other one')
     if bool(re.search('[;,?/<>%^*()-+]', request.forms['username'])):
-        return template('account/sign_up.html', error_message='User name can\'t contain ;,?/<>%^*()-+. Please try other')
+        return template('./account/sign_up.html', error_message='User name can\'t contain ;,?/<>%^*()-+. Please try other one')
         
     seed+=1
     users.append(str(request.forms['username']).strip())
@@ -88,7 +88,7 @@ def file_upload():
     for key, value in dict(upload).items():
         value.filename = f"{str(datetime.now()).replace(':', '-')}_{value.filename}"
         files.append(value.filename)
-        value.save(os.path.join(dir_path,'resources', 'uploads/')) # appends upload.filename automatically
+        value.save(os.path.join(dir_path,'uploads/')) # appends upload.filename automatically
         # name, ext = os.path.splitext(value.filename)
 
         # save_path = get_save_path_for_category(category)
@@ -96,7 +96,7 @@ def file_upload():
 
 @route('/get', method='GET')
 def get_file():
-    return static_file(request.query.file, root=os.path.join(dir_path,'resources','uploads/'))
+    return static_file(request.query.file, root=os.path.join(dir_path,'uploads/'))
 
 global seed
 seed = 1000
@@ -116,4 +116,4 @@ if __name__ == '__main__':
     import soket
     t1 = Thread(target=soket.server.run_forever)
     t1.start()
-    run(host=IPAddr, port=8080, debug=True,reloader=True)
+    run(host=IPAddr, port=8080, debug=False,reloader=False)
